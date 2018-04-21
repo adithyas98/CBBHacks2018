@@ -26,17 +26,22 @@ def valid_login(username, password):
         passwd=MYSQL_DATABASE_PASSWORD, 
         db=MYSQL_DATABASE_DB)
     
-    passhash = generate_password_hash(password)
-    cursor = conn.cursor()
-    if check_password_hash(passhash,password)
+    # passhash = generate_password_hash(password)
+    # cursor = conn.cursor()
+    # if check_password_hash(passhash,password)
 
-        cursor.execute("SELECT * from usertable where username='%s' and pass_hash='%s'" %
-                        (username, passhash))
-        data = cursor.fetchone()
-        if data:
-            return True
-        else:
-            return False
+    #     cursor.execute("SELECT * from usertable where username='%s' and pass_hash='%s'" %
+    #                     (username, passhash))
+    #     data = cursor.fetchone()
+    #     if data:
+    #         return True
+    #     else:
+    #         return False
+    cursor = conn.cursor()
+    cursor.execute("SELECT pass_hash from usertable where username='%s'" % (username))
+    passhash = cursor.fetchone()
+    return check_password_hash(passhash, password)
+    
 
 def register_user(username, password):
     #mysql
