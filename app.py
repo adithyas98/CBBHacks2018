@@ -18,7 +18,25 @@ def
 
 
 
-
+def valid_login(username, password):
+    #mysql
+    MYSQL_DATABASE_HOST = '35.184.37.128'
+    MYSQL_DATABASE_USER = 'cbbroot'
+    MYSQL_DATABASE_PASSWORD = 'studyu'
+    MYSQL_DATABASE_DB = 'userdb'
+    conn = pymysql.connect(
+        host=MYSQL_DATABASE_HOST, 
+        user=MYSQL_DATABASE_USER, 
+        passwd=MYSQL_DATABASE_PASSWORD, 
+        db=MYSQL_DATABASE_DB)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * from user where username='%s' and password='%s'" %
+                    (username, password))
+    data = cursor.fetchone()
+    if data:
+        return True
+    else:
+        return False
 
 
 
