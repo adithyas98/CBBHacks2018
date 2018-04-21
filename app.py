@@ -2,7 +2,7 @@
 This script runs the application using a development server.
 It contains the definition of routes and views for the application.
 """
-
+import pymysql
 from flask import Flask, render_template,request
 app = Flask(__name__)
 
@@ -51,7 +51,7 @@ def valid_login(username, password):
         passwd=MYSQL_DATABASE_PASSWORD, 
         db=MYSQL_DATABASE_DB)
     cursor = conn.cursor()
-    cursor.execute("SELECT * from user where username='%s' and password='%s'" %
+    cursor.execute("SELECT * from usertable where username='%s' and password='%s'" %
                     (username, password))
     data = cursor.fetchone()
     if data:
