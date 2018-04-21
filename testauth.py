@@ -40,7 +40,7 @@ def valid_login(username, password):
     cursor = conn.cursor()
     cursor.execute("SELECT pass_hash from usertable where username='%s'" % (username))
     passhash = cursor.fetchone()[0]
-    # print(passhash)
+
     return check_password_hash(passhash, password)
     
 
@@ -61,8 +61,8 @@ def register_user(username, password):
                     (username))
     data = cursor.fetchone()
     if not data:
-        cursor.execute("INSERT INTO `usertable` (`username`,`password`, `pass_hash`) VALUES ('%s', '%s', '%s');" %
-                    (username, password, generate_password_hash(password)))
+        cursor.execute("INSERT INTO `usertable` (`username`, `pass_hash`) VALUES ( '%s', '%s');" %
+                    (username, generate_password_hash(password)))
         conn.commit()
         return True
     else:
@@ -74,10 +74,8 @@ def register_user(username, password):
 
 def test():
     # print(valid_login('testuser', 'password')," true if testuser exists")
-    print(register_user('test4', 'password'),"True if new user added, False if user exists")
+    print(register_user('test4@colby.edu', 'password'),"True if new user added, False if user exists")
     print(valid_login('test4', 'password'))
-
-
 
 
 if __name__ == '__main__':
