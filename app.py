@@ -3,7 +3,7 @@ This script runs the application using a development server.
 It contains the definition of routes and views for the application.
 """
 
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request,redirect,url_for
 app = Flask(__name__)
 
 # Make the WSGI interface available at the top level so wfastcgi can get it.
@@ -28,8 +28,7 @@ def login():
         # we want to run the check method
         if(loginCheck(request.form['username'],request.form['password'])):
             #if the user has passed in the correct credentials
-            raise Exception('I know Python!')
-            return url_for('index')
+            return redirect(url_for('dashboard'))
         else:
             error="Sorry the password or username entered was incorrect"
     return render_template("login.html",error=error)
@@ -38,7 +37,10 @@ def loginCheck(username,password):
     #We are simply going to check to see if the password and the username are the same
     return username==password
 
-
+@app.route("/dashboard")
+def dashboard():
+    #this will display the dashboard
+    return render_template('index.html')
 
 
 def valid_login(username, password):
