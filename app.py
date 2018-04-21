@@ -26,7 +26,7 @@ def login():
     #if the method of request is post, we will display the user page, else we will display the login page
     if request.method=='POST':
         # we want to run the check method
-        if(loginCheck(request.form['username'],request.form['password'])):
+        if(valid_login(request.form['username'],request.form['password'])):
             #if the user has passed in the correct credentials
             raise Exception('I know Python!')
             return url_for('index')
