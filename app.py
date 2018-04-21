@@ -15,12 +15,11 @@ def hello():
     return "Hello World!"
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("login.html")
 
 
 @app.route('/login',methods=["GET","POST"])
-def signup():
-
+def login():
     #Initialize the Error variable
     error=None
     #This method will allow the user to sign up and sign in to a web page
@@ -29,11 +28,11 @@ def signup():
         # we want to run the check method
         if(loginCheck(request.form['username'],request.form['password'])):
             #if the user has passed in the correct credentials
-            return "Hello"
+            raise Exception('I know Python!')
+            return url_for('index')
         else:
             error="Sorry the password or username entered was incorrect"
-    else:
-        return render_template("login.html",error)
+    return render_template("login.html",error=error)
 
 def loginCheck(username,password):
     #We are simply going to check to see if the password and the username are the same
