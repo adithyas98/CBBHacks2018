@@ -3,7 +3,7 @@ This script runs the application using a development server.
 It contains the definition of routes and views for the application.
 """
 
-from flask import Flask
+from flask import Flask, render_template,request
 app = Flask(__name__)
 
 # Make the WSGI interface available at the top level so wfastcgi can get it.
@@ -14,8 +14,27 @@ wsgi_app = app.wsgi_app
 def hello():
     return "Hello World!"
 
-def 
 
+
+
+@app.route('/login',methods=['POST','GET'])
+def signup():
+    #Initialize the Error variable
+    error=None
+    #This method will allow the user to sign up and sign in to a web page
+    #if the method of request is post, we will display the user page, else we will display the login page
+    if request.method=='POST':
+        # we want to run the check method
+        if(loginCheck(request.form['username'],request.form[password])):
+            #if the user has passed in the correct credentials
+            render_template("welcome.html",username=request.form.get('username'))
+        else:
+            error="Sorry the password or username entered was incorrect"
+    return render_template("hi.html",error)
+
+def loginCheck(username,password):
+    #We are simply going to check to see if the password and the username are the same
+    return username==password
 
 
 
