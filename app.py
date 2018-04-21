@@ -17,21 +17,26 @@ def hello():
 
 
 
-@app.route('/login',methods=['POST','GET'])
+@app.route('/login',methods=["GET","POST"])
 def signup():
+    if request.method=="POST":
+        return "Hello"
+    return render_template("hi.html")
+'''
     #Initialize the Error variable
     error=None
     #This method will allow the user to sign up and sign in to a web page
     #if the method of request is post, we will display the user page, else we will display the login page
     if request.method=='POST':
         # we want to run the check method
-        if(loginCheck(request.form['username'],request.form[password])):
+        if(loginCheck(request.form['username'],request.form['password'])):
             #if the user has passed in the correct credentials
-            render_template("welcome.html",username=request.form.get('username'))
+            return "Hello"
         else:
             error="Sorry the password or username entered was incorrect"
-    return render_template("hi.html",error)
-
+    else:
+        return render_template("hi.html",error)
+'''
 def loginCheck(username,password):
     #We are simply going to check to see if the password and the username are the same
     return username==password
