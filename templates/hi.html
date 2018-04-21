@@ -10,7 +10,9 @@
     <body>
     <header class="navbar">
     <div class="container">
-    
+    {% if error %}
+        {{error}}
+    {% end if %}
     
     <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -68,7 +70,7 @@
 
 <div class="input-group">
   <span class="input-group-addon" id="basic-addon1">@</span>
-  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+  <input type="text" class="form-control" name="username" placeholder="Username" aria-describedby="basic-addon1">
 </div>
 
 <div class="input-group">
@@ -78,7 +80,7 @@
 
 <div class="input-group">
   <span class="input-group-addon">></span>
-  <input type="text" class="form-control" placeholder="Password">
+  <input type="text" class="form-control" name="password"placeholder="Password">
   <!--<span class="input-group-addon">.00</span> -->
 </div>
 
