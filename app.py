@@ -14,9 +14,7 @@ wsgi_app = app.wsgi_app
 def hello():
     return "Hello World!"
 
-@app.route('/')
-def signUp():
-    
+def 
 
 
 
