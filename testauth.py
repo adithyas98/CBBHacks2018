@@ -1,0 +1,73 @@
+"""
+This script runs the application using a development server.
+It contains the definition of routes and views for the application.
+"""
+import pymysql
+from flask import Flask, render_template,request
+app = Flask(__name__)
+
+# Make the WSGI interface available at the top level so wfastcgi can get it.
+wsgi_app = app.wsgi_app
+
+
+
+
+
+def valid_login(username, password):
+    #mysql
+    MYSQL_DATABASE_HOST = '35.184.37.128'
+    MYSQL_DATABASE_USER = 'cbbroot'
+    MYSQL_DATABASE_PASSWORD = 'studyu'
+    MYSQL_DATABASE_DB = 'userdb'
+    conn = pymysql.connect(
+        host=MYSQL_DATABASE_HOST, 
+        user=MYSQL_DATABASE_USER, 
+        passwd=MYSQL_DATABASE_PASSWORD, 
+        db=MYSQL_DATABASE_DB)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * from usertable where username='%s' and password='%s'" %
+                    (username, password))
+    data = cursor.fetchone()
+    if data:
+        return True
+    else:
+        return False
+
+def register_user(username, password):
+    #mysql
+    MYSQL_DATABASE_HOST = '35.184.37.128'
+    MYSQL_DATABASE_USER = 'cbbroot'
+    MYSQL_DATABASE_PASSWORD = 'studyu'
+    MYSQL_DATABASE_DB = 'userdb'
+    conn = pymysql.connect(
+        host=MYSQL_DATABASE_HOST, 
+        user=MYSQL_DATABASE_USER, 
+        passwd=MYSQL_DATABASE_PASSWORD, 
+        db=MYSQL_DATABASE_DB)
+    cursor = conn.cursor()
+    # check if username alr exists
+    cursor.execute("SELECT * from usertable where username='%s'" %
+                    (username))
+    data = cursor.fetchone()
+    if not data:
+        cursor.execute("INSERT INTO `usertable` (`username`,`password`) VALUES (%s, %s);" %
+                    (username, password))
+        connection.commit()
+        return True
+    else:
+        return False
+
+    # cursor.execute("INSERT INTO `usertable` (`username`,`password`) VALUES ('%s', '%s');" %
+    #                 (username, password))
+    # conn.commit()
+
+def test():
+    print(valid_login('testuser', 'password')," true if testuser exists")
+    print(register_user('test3', 'password'),"True if new user added, False if user exists")
+
+
+
+
+
+if __name__ == '__main__':
+    test()
