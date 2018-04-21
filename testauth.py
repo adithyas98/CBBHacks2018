@@ -25,9 +25,11 @@ def valid_login(username, password):
         user=MYSQL_DATABASE_USER, 
         passwd=MYSQL_DATABASE_PASSWORD, 
         db=MYSQL_DATABASE_DB)
+    
+    passhash = generate_password_hash(password)
     cursor = conn.cursor()
-    cursor.execute("SELECT * from usertable where username='%s' and password='%s'" %
-                    (username, password))
+    cursor.execute("SELECT * from usertable where username='%s' and pass_hash='%s'" %
+                    (username, passhash))
     data = cursor.fetchone()
     if data:
         return True
