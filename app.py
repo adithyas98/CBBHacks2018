@@ -13,16 +13,14 @@ wsgi_app = app.wsgi_app
 @app.route('/hello')
 def hello():
     return "Hello World!"
-
-
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
 @app.route('/login',methods=["GET","POST"])
 def signup():
-    if request.method=="POST":
-        return "Hello"
-    return render_template("hi.html")
-'''
+
     #Initialize the Error variable
     error=None
     #This method will allow the user to sign up and sign in to a web page
@@ -35,8 +33,8 @@ def signup():
         else:
             error="Sorry the password or username entered was incorrect"
     else:
-        return render_template("hi.html",error)
-'''
+        return render_template("login.html",error)
+
 def loginCheck(username,password):
     #We are simply going to check to see if the password and the username are the same
     return username==password
