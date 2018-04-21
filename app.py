@@ -13,24 +13,27 @@ wsgi_app = app.wsgi_app
 @app.route('/hello')
 def hello():
     return "Hello World!"
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
-
-
-@app.route('/login',methods=['POST','GET'])
+@app.route('/login',methods=["GET","POST"])
 def signup():
+
     #Initialize the Error variable
     error=None
     #This method will allow the user to sign up and sign in to a web page
     #if the method of request is post, we will display the user page, else we will display the login page
     if request.method=='POST':
         # we want to run the check method
-        if(loginCheck(request.form['username'],request.form[password])):
+        if(loginCheck(request.form['username'],request.form['password'])):
             #if the user has passed in the correct credentials
-            render_template("welcome.html",username=request.form.get('username'))
+            return "Hello"
         else:
             error="Sorry the password or username entered was incorrect"
-    return render_template("hi.html",error)
+    else:
+        return render_template("login.html",error)
 
 def loginCheck(username,password):
     #We are simply going to check to see if the password and the username are the same
@@ -50,14 +53,23 @@ def valid_login(username, password):
         user=MYSQL_DATABASE_USER, 
         passwd=MYSQL_DATABASE_PASSWORD, 
         db=MYSQL_DATABASE_DB)
+    
+    # passhash = generate_password_hash(password)
+    # cursor = conn.cursor()
+    # if check_password_hash(passhash,password)
+
+    #     cursor.execute("SELECT * from usertable where username='%s' and pass_hash='%s'" %
+    #                     (username, passhash))
+    #     data = cursor.fetchone()
+    #     if data:
+    #         return True
+    #     else:
+    #         return False
     cursor = conn.cursor()
-    cursor.execute("SELECT * from usertable where username='%s' and password='%s'" %
-                    (username, password))
-    data = cursor.fetchone()
-    if data:
-        return True
-    else:
-        return False
+    cursor.execute("SELECT pass_hash from usertable where username='%s'" % (username))
+    passhash = cursor.fetchone()[0]
+
+    return check_password_hash(passhash, password)
 
 def register_user(username, password):
     #mysql
@@ -71,10 +83,26 @@ def register_user(username, password):
         passwd=MYSQL_DATABASE_PASSWORD, 
         db=MYSQL_DATABASE_DB)
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO `usertable` (`username`,`password`) VALUES (%s, %s);" %
-                    (username, password))
-    connection.commit()
+    # check if username alr exists
+    cursor.execute("SELECT * from usertable where username='%s'" %
+                    (username))
+    data = cursor.fetchone()
+    if not data:
+        cursor.execute("INSERT INTO `usertable` (`username`,`password`, `pass_hash`) VALUES ('%s', '%s', '%s');" %
+                    (username, password, generate_password_hash(password)))
+        conn.commit()
+        return True
+    else:
+        return False
 
+    # cursor.execute("INSERT INTO `usertable` (`username`,`password`) VALUES ('%s', '%s');" %
+    #                 (username, password))
+    # conn.commit()
+
+def testregistertestlogin():
+    # print(valid_login('testuser', 'password')," true if testuser exists")
+    print(register_user('test4', 'password'),"True if new user added, False if user exists")
+    print(valid_login('test4', 'password'))
 
 
 
