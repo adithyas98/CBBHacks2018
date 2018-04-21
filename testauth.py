@@ -3,6 +3,7 @@ This script runs the application using a development server.
 It contains the definition of routes and views for the application.
 """
 import pymysql
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, render_template,request
 app = Flask(__name__)
 
@@ -50,8 +51,8 @@ def register_user(username, password):
                     (username))
     data = cursor.fetchone()
     if not data:
-        cursor.execute("INSERT INTO `usertable` (`username`,`password`) VALUES (%s, %s);" %
-                    (username, password))
+        cursor.execute("INSERT INTO `usertable` (`username`,`password`, 'pass_hash') VALUES (%s, %s);" %
+                    (username, password, generate_password_hash(password)))
         connection.commit()
         return True
     else:
@@ -62,9 +63,9 @@ def register_user(username, password):
     # conn.commit()
 
 def test():
-    print(valid_login('testuser', 'password')," true if testuser exists")
+    # print(valid_login('testuser', 'password')," true if testuser exists")
     print(register_user('test3', 'password'),"True if new user added, False if user exists")
-
+    print(valid_login('test3', 'password'))
 
 
 
