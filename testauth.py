@@ -40,6 +40,7 @@ def valid_login(username, password):
     cursor = conn.cursor()
     cursor.execute("SELECT pass_hash from usertable where username='%s'" % (username))
     passhash = cursor.fetchone()
+    print(passhash)
     return check_password_hash(passhash, password)
     
 
