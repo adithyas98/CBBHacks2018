@@ -93,33 +93,23 @@ def newSession(subject, username, time, date, location):
     else:
         return False
 
-#add a user to an existing session
-def joinSession(session, username):
-    # MYSQL_DATABASE_HOST = '35.184.37.128'
-    # MYSQL_DATABASE_USER = 'cbbroot'
-    # MYSQL_DATABASE_PASSWORD = 'studyu'
-    # MYSQL_DATABASE_DB = 'userdb'
-    # conn = pymysql.connect(
-    #     host=MYSQL_DATABASE_HOST, 
-    #     user=MYSQL_DATABASE_USER, 
-    #     passwd=MYSQL_DATABASE_PASSWORD, 
-    #     db=MYSQL_DATABASE_DB)
+#add a new user to an existing session given a session ID
+def joinSession(sessionID, newUser):
+    MYSQL_DATABASE_HOST = '35.184.37.128'
+    MYSQL_DATABASE_USER = 'cbbroot'
+    MYSQL_DATABASE_PASSWORD = 'studyu'
+    MYSQL_DATABASE_DB = 'userdb'
+    conn = pymysql.connect(
+        host=MYSQL_DATABASE_HOST, 
+        user=MYSQL_DATABASE_USER, 
+        passwd=MYSQL_DATABASE_PASSWORD, 
+        db=MYSQL_DATABASE_DB)
 
-    # cursor = conn.cursor()
-    # # check if sessions already exists
-    # cursor.execute("SELECT * FROM sessions WHERE subject = `%s` and usernameand time = `%s` and location = `%s`" %
-    #                 (session.subject, session.username, session.time, session.location))
-    # data = cursor.fetchone()
-    # if not data:
-    #     session = studySession(subject, username, time, location)
-    #     return True
-    # else:
-    #     return False
-    if username in session.users:
-        return False
-    else:
-        session.join(username)
-        return True
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM sessions WHERE sessionID = '%s'" %
+                    (sessionID))
+    data = cursor.fetchone()
+    session = newSession(data[1], newUser,data[3],data[4],data[5])
 
 #search function
 def search(query):
@@ -138,6 +128,9 @@ def search(query):
                      (query))
      data = cursor.fetchall()
      return data
+
+def length(session):
+    return len(session.users)
 
 #test function
 def test():
@@ -159,7 +152,7 @@ def test():
     # session1.join("testUser4")
     # print(session1.toString())
 
-    print()
+    print(joinSession(2,"tom"))
 
     # session2 = studySession("CS231", "Trisha","2018-04-25 20:45:00", "Miller Street")
     # session2.join("Caleb")
