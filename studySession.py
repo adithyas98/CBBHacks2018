@@ -115,11 +115,29 @@ def joinSession(session, username):
     #     return True
     # else:
     #     return False
-    if username in session.susers:
+    if username in session.users:
         return False
     else:
         session.join(username)
         return True
+
+#search function
+def search(query):
+    MYSQL_DATABASE_HOST = '35.184.37.128'
+    MYSQL_DATABASE_USER = 'cbbroot'
+    MYSQL_DATABASE_PASSWORD = 'studyu'
+    MYSQL_DATABASE_DB = 'userdb'
+    conn = pymysql.connect(
+        host=MYSQL_DATABASE_HOST, 
+        user=MYSQL_DATABASE_USER, 
+        passwd=MYSQL_DATABASE_PASSWORD, 
+        db=MYSQL_DATABASE_DB)
+    
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM sessions WHERE subject = '%s'" %
+                    (query))
+    data = cursor.fetchall()
+    return data
 
 #test function
 def test():
@@ -141,7 +159,8 @@ def test():
     # session1.join("testUser4")
     # print(session1.toString())
 
-    # print()
+    print(search('MA253'))
+    print(type(search('MA253')))
 
     # session2 = studySession("CS231", "Trisha","2018-04-25 20:45:00", "Miller Street")
     # session2.join("Caleb")
