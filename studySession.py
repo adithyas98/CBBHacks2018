@@ -3,6 +3,8 @@ from flask import Flask, render_template,request
 
 class studySession:
 
+    users = []
+    data = []
     #initializes a studySession object
     #subject: course (e.g. MA253)
     #username: host student's username
@@ -32,7 +34,10 @@ class studySession:
         cursor = conn.cursor()
         cursor.execute("INSERT INTO `sessions` (`subject`, `username`, `time`, `location`) VALUES ( '%s', '%s','%s','%s');" %
                         (self.subject, self.username, self.time, self.location))
+        data = cursor.fetchone()
         conn.commit()
+        users.add(self.username)
+        data.add(self.subject, users, self.time, self.location)
 
 
     #string representation of the studySession object
@@ -54,9 +59,60 @@ class studySession:
         cursor.execute("INSERT INTO `sessions` (`subject`, `username`, `time`, `location`) VALUES ( '%s', '%s','%s','%s');" %
                         (self.subject, newUser, self.time, self.location))
         conn.commit()
+        users.add(newUser)
         
 
 #change this to a Class and then make a joinSession function
+
+def newSession(subject, username, time, location):
+    #mysql
+    MYSQL_DATABASE_HOST = '35.184.37.128'
+    MYSQL_DATABASE_USER = 'cbbroot'
+    MYSQL_DATABASE_PASSWORD = 'studyu'
+    MYSQL_DATABASE_DB = 'userdb'
+    conn = pymysql.connect(
+        host=MYSQL_DATABASE_HOST, 
+        user=MYSQL_DATABASE_USER, 
+        passwd=MYSQL_DATABASE_PASSWORD, 
+        db=MYSQL_DATABASE_DB)
+
+    cursor = conn.cursor()
+    # check if session already exists
+    cursor.execute("SELECT * FROM sessions WHERE subject = `%s` and time = `%s` and location = `%s`" %
+                    (subject, username, time, location))
+    data = cursor.fetchone()
+    if not data:
+        session = studySession(subject, username, time, location)
+        return session
+    else:
+        return null
+
+def joinSession(session, username):
+    # MYSQL_DATABASE_HOST = '35.184.37.128'
+    # MYSQL_DATABASE_USER = 'cbbroot'
+    # MYSQL_DATABASE_PASSWORD = 'studyu'
+    # MYSQL_DATABASE_DB = 'userdb'
+    # conn = pymysql.connect(
+    #     host=MYSQL_DATABASE_HOST, 
+    #     user=MYSQL_DATABASE_USER, 
+    #     passwd=MYSQL_DATABASE_PASSWORD, 
+    #     db=MYSQL_DATABASE_DB)
+
+    # cursor = conn.cursor()
+    # # check if sessions already exists
+    # cursor.execute("SELECT * FROM sessions WHERE subject = `%s` and usernameand time = `%s` and location = `%s`" %
+    #                 (session.subject, session.username, session.time, session.location))
+    # data = cursor.fetchone()
+    # if not data:
+    #     session = studySession(subject, username, time, location)
+    #     return True
+    # else:
+    #     return False
+    if username in session.users:
+        return False
+    else:
+        session.join(username)
+        return True
 
 def test():
     # print(addSession("MA253", "testuser1","2018-04-21 08:30:00", "Davis 217"))
