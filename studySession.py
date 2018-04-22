@@ -121,6 +121,8 @@ def joinSession(session, username):
         session.join(username)
         return True
 
+
+
 #test function
 def test():
     # print(addSession("MA253", "testuser1","2018-04-21 08:30:00", "Davis 217"))
