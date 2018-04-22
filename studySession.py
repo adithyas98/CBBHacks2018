@@ -34,6 +34,7 @@ class studySession:
                         (self.subject, self.username, self.time, self.location))
         conn.commit()
 
+
     #string representation of the studySession object
     def toString(self):
         return self.subject + " " + self.username + " " + self.time + " " + self.location
@@ -66,6 +67,9 @@ def test():
     # print(addSession("CS231", "Caleb","2018-04-25 20:45:00", "Miller Street"))
     # print(addSession("CS231", "Gautam","2018-04-25 20:45:00", "Miller Street"))
 
+
+    #SQL query for any individual session:
+    #SELECT * FROM sessions WHERE subject = "session.subject" and time = "session.time" and location = "session.location";
 
     session1 = studySession("MA253", "testuser1","2018-04-21 08:30:00", "Davis 217")
     session1.join("testUser2")
