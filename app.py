@@ -136,7 +136,7 @@ def register_user(username, password):
         db=MYSQL_DATABASE_DB)
     cursor = conn.cursor()
     # check if username alr exists
-    cursor.execute("SELECT * from usertable where username='%s'" %[username])
+    cursor.execute("SELECT * from usertable where username='%s'" %username)
     data = cursor.fetchone()
     if not data:
         cursor.execute("INSERT INTO `usertable` (`username`, `pass_hash`) VALUES ('%s', '%s');" %(username, generate_password_hash(password)))
