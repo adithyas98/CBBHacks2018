@@ -7,6 +7,7 @@ It contains the definition of routes and views for the application.
 from flask import Flask, render_template,request,redirect,url_for
 import pymysql
 from werkzeug.security import generate_password_hash, check_password_hash
+import studySession
 
 app = Flask(__name__)
 
@@ -93,7 +94,26 @@ def register():
             error="Sorry the username has already been taken"
     return render_template('register.html',error=error)
 
+@app.route("/dashboard/form",methods=['POST','GET'])
+def form():
+    #This method will handle the registration page
+    #Initialize the Error variable
+    error=None
+    #This method will allow the user to sign up and sign in to a web page
+    #if the method of request is post, we will display the user page, else we will display the login page
+    if request.method=='POST':
+        
+        postTrue = studySession.newSession(request.form.get('classCode'), 
+                                            request.form.get('name'), 
+                                            request.form.get('time'), 
+                                            request.form.get('date'), 
+                                            request.form.get('location'))
 
+        # we want to run the check method
+        if(postTrue):
+            #if the user has passed in the correct credentials
+            return "S:LJKCACLKACNLKACAC"
+    return render_template('form.html',error=error)
 
 def register_user(username, password):
     #mysql
@@ -108,12 +128,10 @@ def register_user(username, password):
         db=MYSQL_DATABASE_DB)
     cursor = conn.cursor()
     # check if username alr exists
-    cursor.execute("SELECT * from usertable where username='%s'" %
-                    (username))
+    cursor.execute("SELECT * from usertable where username='%s'" %[username])
     data = cursor.fetchone()
     if not data:
-        cursor.execute("INSERT INTO `usertable` (`username`, `pass_hash`) VALUES ('%s', '%s');" %
-                    (username, generate_password_hash(password)))
+        cursor.execute("INSERT INTO `usertable` (`username`, `pass_hash`) VALUES ('%s', '%s');" %(username, generate_password_hash(password)))
         conn.commit()
         return True
     else:
