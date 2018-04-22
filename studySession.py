@@ -5,6 +5,7 @@ class studySession:
 
     users = []
     data = []
+
     #initializes a studySession object
     #subject: course (e.g. MA253)
     #username: host student's username
@@ -33,6 +34,8 @@ class studySession:
             user=MYSQL_DATABASE_USER, 
             passwd=MYSQL_DATABASE_PASSWORD, 
             db=MYSQL_DATABASE_DB)
+
+        #Run MySQL query and save the data
         cursor = conn.cursor()
         cursor.execute("INSERT INTO `sessions` (`subject`, `username`, `time`, `date`, `location`) VALUES ( '%s', '%s','%s','%s','%s');" %
                         (self.subject, self.username, self.time, self.date, self.location))
