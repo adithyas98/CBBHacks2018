@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SB Admin - Start Bootstrap Template</title>
+    <!-- Bootstrap core CSS-->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin.css" rel="stylesheet">
+</head>
+
+<body class="bg-dark">
+    <div class="container">
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header">Create a Study Session!</div>
+            <div class="card-body">
+                <form action="{{url_for('form')}}" method="POST">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="exampleInputName">Preferred Name</label>
+                                <input class="form-control" name="name" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleInputEmail1">Time</label>
+                                <input class="form-control" name="time" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" placeholder="e.g 10:00AM">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="exampleInputEmail1">Date</label>
+                                <input class="form-control" name="date" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" placeholder="e.g 10/28/1998">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Class Code</label>
+                        <input class="form-control" name="classCode" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" placeholder="e.g MA274">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="exampleInputPassword1">Location</label>
+                                <input class="form-control" name="location" id="exampleInputPassword1" type="text" placeholder="e.g Miller Street">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                </form>
+                {% if error %}
+                <p style="color:red">
+                    {{ error }}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>0
+    <!-- Bootstrap core JavaScript-->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+</body>
+
+</html>
