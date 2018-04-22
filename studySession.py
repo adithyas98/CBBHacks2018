@@ -68,8 +68,9 @@ class studySession:
 #subject: course (e.g. MA253)
 #username: host student's username
 #time: timestamp of studySession
+#date: date of session
 #location: where the session is conducted
-def newSession(subject, username, time, location):
+def newSession(subject, username, time, date, location):
     #mysql
     MYSQL_DATABASE_HOST = '35.184.37.128'
     MYSQL_DATABASE_USER = 'cbbroot'
