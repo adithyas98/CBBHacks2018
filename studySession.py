@@ -91,7 +91,7 @@ def newSession(subject, username, time, date, location):
         session = studySession(subject, username, time, date, location)
         return session
     else:
-        return null
+        return False
 
 #add a user to an existing session
 def joinSession(session, username):
