@@ -42,9 +42,16 @@ def loginCheck(username,password):
     #We are simply going to check to see if the password and the username are the same
     return username==password
 
-@app.route("/dashboard")
+@app.route("/dashboard",methods=['POST','GET'])
 def dashboard():
     #this will display the dashboard
+    if (request.method=="POST"):
+        tuples=studySession.search(request.form.get('search'))
+        items = []
+        for i in range(len(tuples)):
+            an_item = dict(id=tuples[i][0], subject=tuples[i][1], name=tuples[i][2],time=tuples[i][3],date=tuples[i][4],location=tuples[i][5])
+            items.append(an_item)
+        return render_template('tables.html',items=items)
     return render_template('index.html')
 
 

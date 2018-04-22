@@ -21,7 +21,7 @@
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Join An Existing Session</div>
       <div class="card-body">
-        <form>
+        <form action="{{url_for('session')}}" method="POST">
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
@@ -34,7 +34,7 @@
               </div>
             </div>
           </div>
-          <a class="btn btn-primary btn-block" href="login.html">Register</a>
+          <button class="btn btn-primary btn-block" type="submit">Register</button>
           
            </div>
   <!-- Bootstrap core JavaScript-->

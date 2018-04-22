@@ -22,56 +22,40 @@
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
+                  <tr>
+                      <th>Session ID</th>
+                      <th>Subject</th>
+                      <th>Name</th>
+                      <th>Time</th>
+                      <th>Date</th>
+                      <th>Location</th>
+
+                      <!--  <th>Salary</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+      <!--  <th>Name</th>
+        <th>Position</th>
+        <th>Office</th>
+        <th>Age</th>
+        <th>Start date</th>
+        <th>Salary</th>
+      </tr>-->
+                      </tfoot>
+<tbody>
+                  {% for item in items %}
                 <tr>
-                  <th>Name</th>
-                  <th>Subject</th>
-                  <th>Time</th>
-                  <th>Date</th>
-                  <th>Location</th>
-                <!--  <th>Salary</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                <!--  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
-                </tr>-->
-              </tfoot>
-              <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>CS231</td>
-                  <td>10:00AM</td>
-                  <td>2018/04/25</td>
-                  <td>Miller 2nd Floor</td>
+                  <td>{{item.id}}</td>
+                  <td>{{item.subject}}</td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.time}}</td>
+                  <td>{{item.date}}</td>
+                  <td>{{item.location}}</td>
                   
                 </tr>
-                <tr>
-                  <td>Garrett Winters</td>
-                  <td>CS231</td>
-                  <td>12:00PM</td>
-                  <td>2018/05/24</td>
-                  <td>Bixler</td>
-                 
-                </tr>
-                <tr>
-                  <td>Ashton Cox</td>
-                  <td>CS231</td>
-                  <td>11:00AM</td>
-                  <td>2018/05/25</td>
-                  <td>Drummond Common Room</td>
-                 
-                </tr>
-                <tr>
-                  <td>Cedric Kelly</td>
-                  <td>CS231</td>
-                  <td>2:00PM</td>
-                  <td>2018/02/15</td>
-                  <td>Davis</td>
+                {% endfor %}
+                <
               </tbody>
             </table>
           </div>
@@ -90,11 +74,11 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="exampleInputLastName">Name</label>
-                                        <input class="form-control" id="Name" type="text" aria-describedby="nameHelp" placeholder="Enter Name">
+                                        <input class="form-control" name="name"id="Name" type="text" aria-describedby="nameHelp" placeholder="Enter Name">
                                     </div>
                                 </div>
                             </div>
-                            <a class="btn btn-primary btn-block" type=submit>Join!</a>
+                            <button class="btn btn-primary btn-block" type=submit>Join!</button>
 
                     </div>
                 </div>
