@@ -147,9 +147,19 @@ def testregistertestlogin():
     print(register_user('test4@colby.edu', 'password'),"True if new user added, False if user exists")
     print(valid_login('test4', 'password'))
 
+def search():
+    v = request.search()
+    
 
-@app.route('/dashboard/session')
+
+@app.route('/dashboard/session',methods=['POST','GET'])
 def session():
+    if(request.session=='POST'):
+        #If the session is equal to post
+        issession=studySession.joinSession(request.form.get('session'),request.form.get('name'))
+        if(issession):
+            flash("You have been added to the Study Session!")
+            redirect(url_for('dashboard'))
     return render_template('tables.html')
 
 
