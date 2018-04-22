@@ -8,9 +8,10 @@ class studySession:
     #initializes a studySession object
     #subject: course (e.g. MA253)
     #username: host student's username
-    #time: timestamp of studySession (formatted as: YYYY-MM-DD HH:MM:SS)
+    #time: time of session
+    #date: date of session
     #location: where the session is conducted
-    def __init__(self, subject, username, time, location):
+    def __init__(self, subject, username, time, date, location):
         app = Flask(__name__)
         # Make the WSGI interface available at the top level so wfastcgi can get it.
         wsgi_app = app.wsgi_app
@@ -18,6 +19,7 @@ class studySession:
         self.subject = subject
         self.username = username
         self.time = time
+        self.date = date
         self.location = location
 
 
@@ -32,17 +34,17 @@ class studySession:
             passwd=MYSQL_DATABASE_PASSWORD, 
             db=MYSQL_DATABASE_DB)
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO `sessions` (`subject`, `username`, `time`, `location`) VALUES ( '%s', '%s','%s','%s');" %
-                        (self.subject, self.username, self.time, self.location))
+        cursor.execute("INSERT INTO `sessions` (`subject`, `username`, `time`, `date`, `location`) VALUES ( '%s', '%s','%s','%s','%s');" %
+                        (self.subject, self.username, self.time, self.date, self.location))
         data = cursor.fetchone()
         conn.commit()
         users.add(self.username)
-        data.add(self.subject, users, self.time, self.location)
+        data.add(self.subject, users, self.time, self.date, self.location)
 
 
     #string representation of the studySession object
     def toString(self):
-        return self.subject + " " + self.username + " " + self.time + " " + self.location
+        return self.subject + " " + self.username + " " + self.time + " " + self.date + " "+ self.location
     
     #add a new user to an existing study session
     def join(self, newUser):
@@ -56,8 +58,8 @@ class studySession:
             passwd=MYSQL_DATABASE_PASSWORD, 
             db=MYSQL_DATABASE_DB)
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO `sessions` (`subject`, `username`, `time`, `location`) VALUES ( '%s', '%s','%s','%s');" %
-                        (self.subject, newUser, self.time, self.location))
+        cursor.execute("INSERT INTO `sessions` (`subject`, `username`, `time`, `date`, `location`) VALUES ( '%s', '%s','%s','%s');" %
+                        (self.subject, newUser, self.time, self.date, self.location))
         conn.commit()
         users.add(newUser)
         
@@ -65,7 +67,7 @@ class studySession:
 #create a new session
 #subject: course (e.g. MA253)
 #username: host student's username
-#time: timestamp of studySession (formatted as: YYYY-MM-DD HH:MM:SS)
+#time: timestamp of studySession
 #location: where the session is conducted
 def newSession(subject, username, time, location):
     #mysql
@@ -81,11 +83,11 @@ def newSession(subject, username, time, location):
 
     cursor = conn.cursor()
     # check if session already exists
-    cursor.execute("SELECT * FROM sessions WHERE subject = `%s` and time = `%s` and location = `%s`" %
-                    (subject, username, time, location))
+    cursor.execute("SELECT * FROM sessions WHERE subject = `%s` and time = `%s` and date = `%s' and location = `%s`" %
+                    (subject, username, time, date, location))
     data = cursor.fetchone()
     if not data:
-        session = studySession(subject, username, time, location)
+        session = studySession(subject, username, time, date, location)
         return session
     else:
         return null
