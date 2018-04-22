@@ -38,8 +38,8 @@ class studySession:
                         (self.subject, self.username, self.time, self.date, self.location))
         data = cursor.fetchone()
         conn.commit()
-        self.users.append(self.username)
-        self.data.append([self.subject, self.users, self.time, self.date, self.location])
+        self.users.add(self.username)
+        data.add(self.subject, users, self.time, self.date, self.location)
 
 
     #string representation of the studySession object
@@ -58,10 +58,10 @@ class studySession:
             passwd=MYSQL_DATABASE_PASSWORD, 
             db=MYSQL_DATABASE_DB)
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO 'sessions' (`subject`, `username`, `time`, `date`, `location`) VALUES ( '%s', '%s','%s','%s');" %
+        cursor.execute("INSERT INTO `sessions` (`subject`, `username`, `time`, `date`, `location`) VALUES ( '%s', '%s','%s','%s');" %
                         (self.subject, newUser, self.time, self.date, self.location))
         conn.commit()
-        self.users.append(newUser)
+        self.users.add(newUser)
         
 
 #create a new session
@@ -84,14 +84,14 @@ def newSession(subject, username, time, date, location):
 
     cursor = conn.cursor()
     # check if session already exists
-    cursor.execute("SELECT * FROM sessions WHERE subject = '%s' and username = '%s' and time = '%s' and date = '%s' and location = '%s';" %
+    cursor.execute("SELECT * FROM sessions WHERE subject = `%s` and time = `%s` and date = `%s' and location = `%s`" %
                     (subject, username, time, date, location))
     data = cursor.fetchone()
     if not data:
         session = studySession(subject, username, time, date, location)
         return session
     else:
-        return False
+        return null
 
 #add a user to an existing session
 def joinSession(session, username):
@@ -115,7 +115,7 @@ def joinSession(session, username):
     #     return True
     # else:
     #     return False
-    if username in session.users:
+    if username in session.susers:
         return False
     else:
         session.join(username)
@@ -141,7 +141,7 @@ def test():
     # session1.join("testUser4")
     # print(session1.toString())
 
-    print()
+    # print()
 
     # session2 = studySession("CS231", "Trisha","2018-04-25 20:45:00", "Miller Street")
     # session2.join("Caleb")
