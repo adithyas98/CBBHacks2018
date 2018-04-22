@@ -62,8 +62,11 @@ class studySession:
         users.add(newUser)
         
 
-#change this to a Class and then make a joinSession function
-
+#create a new session
+#subject: course (e.g. MA253)
+#username: host student's username
+#time: timestamp of studySession (formatted as: YYYY-MM-DD HH:MM:SS)
+#location: where the session is conducted
 def newSession(subject, username, time, location):
     #mysql
     MYSQL_DATABASE_HOST = '35.184.37.128'
@@ -87,6 +90,7 @@ def newSession(subject, username, time, location):
     else:
         return null
 
+#add a user to an existing session
 def joinSession(session, username):
     # MYSQL_DATABASE_HOST = '35.184.37.128'
     # MYSQL_DATABASE_USER = 'cbbroot'
@@ -114,6 +118,7 @@ def joinSession(session, username):
         session.join(username)
         return True
 
+#test function
 def test():
     # print(addSession("MA253", "testuser1","2018-04-21 08:30:00", "Davis 217"))
     # print(addSession("MA253", "testuser2","2018-04-21 08:30:00", "Davis 217"))
@@ -127,18 +132,18 @@ def test():
     #SQL query for any individual session:
     #SELECT * FROM sessions WHERE subject = "session.subject" and time = "session.time" and location = "session.location";
 
-    session1 = studySession("MA253", "testuser1","2018-04-21 08:30:00", "Davis 217")
-    session1.join("testUser2")
-    session1.join("testUser3")
-    session1.join("testUser4")
-    print(session1.toString())
+    # session1 = studySession("MA253", "testuser1","2018-04-21 08:30:00", "Davis 217")
+    # session1.join("testUser2")
+    # session1.join("testUser3")
+    # session1.join("testUser4")
+    # print(session1.toString())
 
-    print()
+    # print()
 
-    session2 = studySession("CS231", "Trisha","2018-04-25 20:45:00", "Miller Street")
-    session2.join("Caleb")
-    session2.join("Gautam")
-    print(session2.toString())
+    # session2 = studySession("CS231", "Trisha","2018-04-25 20:45:00", "Miller Street")
+    # session2.join("Caleb")
+    # session2.join("Gautam")
+    # print(session2.toString())
 
 
 if __name__ == '__main__':
