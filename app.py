@@ -154,7 +154,7 @@ def search():
 
 @app.route('/dashboard/session',methods=['POST','GET'])
 def session():
-    if(request.session=='POST'):
+    if(request.method=='POST'):
         #If the session is equal to post
         issession=studySession.joinSession(request.form.get('session'),request.form.get('name'))
         if(issession):
