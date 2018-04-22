@@ -152,8 +152,7 @@ def test():
     # session1.join("testUser4")
     # print(session1.toString())
 
-    print()
-    joinSession(2,"bob")
+    print(joinSession(2,"tom"))
 
     # session2 = studySession("CS231", "Trisha","2018-04-25 20:45:00", "Miller Street")
     # session2.join("Caleb")
