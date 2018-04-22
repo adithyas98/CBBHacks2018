@@ -82,18 +82,16 @@ def newSession(subject, username, time, date, location):
         passwd=MYSQL_DATABASE_PASSWORD, 
         db=MYSQL_DATABASE_DB)
 
-    # cursor = conn.cursor()
-    # # check if session already exists
-    # cursor.execute("SELECT * FROM sessions WHERE subject = `%s` and time = `%s` and date = `%s' and location = `%s`" %
-    #                 (subject, username, time, date, location))
-    # data = cursor.fetchone()
-    # if not data:
-    #     session = studySession(subject, username, time, date, location)
-    #     return session
-    # else:
-    #     return null
-    session = studySession(subject, username, time, date, location)
-    return session
+    cursor = conn.cursor()
+    # check if session already exists
+    cursor.execute("SELECT * FROM sessions WHERE subject = `%s` and time = `%s` and date = `%s' and location = `%s`" %
+                    (subject, username, time, date, location))
+    data = cursor.fetchone()
+    if not data:
+        session = studySession(subject, username, time, date, location)
+        return session
+    else:
+        return null
 
 #add a user to an existing session
 def joinSession(session, username):
