@@ -140,7 +140,7 @@ def search(query):
     return data
 
 #test function
-def test():
+#def test():
     # print(addSession("MA253", "testuser1","2018-04-21 08:30:00", "Davis 217"))
     # print(addSession("MA253", "testuser2","2018-04-21 08:30:00", "Davis 217"))
     # print(addSession("MA253", "testuser3","2018-04-21 08:30:00", "Davis 217"))
