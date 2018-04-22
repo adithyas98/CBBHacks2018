@@ -39,7 +39,7 @@ def valid_login(username, password):
     #         return False
     cursor = conn.cursor()
     cursor.execute("SELECT pass_hash from usertable where username='%s'" % (username))
-    passhash = cursor.fetchone()[0]
+    passhash = cursor.fetchone()
 
     return check_password_hash(passhash, password)
     
