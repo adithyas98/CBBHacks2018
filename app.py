@@ -4,7 +4,7 @@ It contains the definition of routes and views for the application.
 """
 
 
-from flask import Flask, render_template,request,redirect,url_for
+from flask import Flask, render_template,request,redirect,url_for, flash
 import pymysql
 from werkzeug.security import generate_password_hash, check_password_hash
 import studySession
@@ -111,8 +111,9 @@ def form():
 
         # we want to run the check method
         if(postTrue):
+            flash("The Session has been Created!")
             #if the user has passed in the correct credentials
-            return "S:LJKCACLKACNLKACAC"
+            return redirect(url_for('dashboard'))
     return render_template('form.html',error=error)
 
 def register_user(username, password):
@@ -185,4 +186,6 @@ if __name__ == '__main__':
         PORT = int(os.environ.get('SERVER_PORT', '5555'))
     except ValueError:
         PORT = 5555
+    app.secret_key='SuperSecretKey'
     app.run(HOST, PORT)
+    
