@@ -38,8 +38,8 @@ class studySession:
                         (self.subject, self.username, self.time, self.date, self.location))
         data = cursor.fetchone()
         conn.commit()
-        self.users.add(self.username)
-        data.add(self.subject, users, self.time, self.date, self.location)
+        self.users.append(self.username)
+        self.data.append([self.subject, self.users, self.time, self.date, self.location])
 
 
     #string representation of the studySession object
@@ -58,10 +58,10 @@ class studySession:
             passwd=MYSQL_DATABASE_PASSWORD, 
             db=MYSQL_DATABASE_DB)
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO `sessions` (`subject`, `username`, `time`, `date`, `location`) VALUES ( '%s', '%s','%s','%s');" %
+        cursor.execute("INSERT INTO 'sessions' (`subject`, `username`, `time`, `date`, `location`) VALUES ( '%s', '%s','%s','%s');" %
                         (self.subject, newUser, self.time, self.date, self.location))
         conn.commit()
-        self.users.add(newUser)
+        self.users.append(newUser)
         
 
 #create a new session
@@ -84,14 +84,14 @@ def newSession(subject, username, time, date, location):
 
     cursor = conn.cursor()
     # check if session already exists
-    cursor.execute("SELECT * FROM sessions WHERE subject = `%s` and time = `%s` and date = `%s' and location = `%s`" %
+    cursor.execute("SELECT * FROM sessions WHERE subject = '%s' and username = '%s' and time = '%s' and date = '%s' and location = '%s';" %
                     (subject, username, time, date, location))
     data = cursor.fetchone()
     if not data:
         session = studySession(subject, username, time, date, location)
         return session
     else:
-        return null
+        return False
 
 #add a user to an existing session
 def joinSession(session, username):
@@ -121,26 +121,8 @@ def joinSession(session, username):
         session.join(username)
         return True
 
-#search function
-def search(query):
-    MYSQL_DATABASE_HOST = '35.184.37.128'
-    MYSQL_DATABASE_USER = 'cbbroot'
-    MYSQL_DATABASE_PASSWORD = 'studyu'
-    MYSQL_DATABASE_DB = 'userdb'
-    conn = pymysql.connect(
-        host=MYSQL_DATABASE_HOST, 
-        user=MYSQL_DATABASE_USER, 
-        passwd=MYSQL_DATABASE_PASSWORD, 
-        db=MYSQL_DATABASE_DB)
-    
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM sessions WHERE subject = '%s'" %
-                    (query))
-    data = cursor.fetchall()
-    return data
-
 #test function
-#def test():
+def test():
     # print(addSession("MA253", "testuser1","2018-04-21 08:30:00", "Davis 217"))
     # print(addSession("MA253", "testuser2","2018-04-21 08:30:00", "Davis 217"))
     # print(addSession("MA253", "testuser3","2018-04-21 08:30:00", "Davis 217"))
@@ -159,8 +141,7 @@ def search(query):
     # session1.join("testUser4")
     # print(session1.toString())
 
-    print(search('MA253'))
-    print(type(search('MA253')))
+    print()
 
     # session2 = studySession("CS231", "Trisha","2018-04-25 20:45:00", "Miller Street")
     # session2.join("Caleb")
