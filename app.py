@@ -147,7 +147,9 @@ def testregistertestlogin():
     print(valid_login('test4', 'password'))
 
 
-
+@app.route('/dashboard/session')
+def session():
+    return render_template('tables.html')
 
 
 
