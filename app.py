@@ -6,6 +6,7 @@ It contains the definition of routes and views for the application.
 
 from flask import Flask, render_template,request,redirect,url_for
 import pymysql
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
@@ -75,6 +76,25 @@ def valid_login(username, password):
 
     return check_password_hash(passhash, password)
 
+
+@app.route('/register',methods=['POST','GET'])
+def register():
+    #This method will handle the registration page
+    #Initialize the Error variable
+    error=None
+    #This method will allow the user to sign up and sign in to a web page
+    #if the method of request is post, we will display the user page, else we will display the login page
+    if request.method=='POST':
+        # we want to run the check method
+        if(register_user(request.form.get('username'),request.form.get('password'))):
+            #if the user has passed in the correct credentials
+            return redirect(url_for('dashboard'))
+        else:
+            error="Sorry the username has already been taken"
+    return render_template('register.html',error=error)
+
+
+
 def register_user(username, password):
     #mysql
     MYSQL_DATABASE_HOST = '35.184.37.128'
@@ -140,6 +160,7 @@ def testregistertestlogin():
 if __name__ == '__main__':
     import os
     HOST = os.environ.get('SERVER_HOST', 'localhost')
+    app.debug=True
     try:
         PORT = int(os.environ.get('SERVER_PORT', '5555'))
     except ValueError:
