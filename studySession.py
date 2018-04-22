@@ -121,6 +121,24 @@ def joinSession(session, username):
         session.join(username)
         return True
 
+#search function
+ def search(query):
+     MYSQL_DATABASE_HOST = '35.184.37.128'
+     MYSQL_DATABASE_USER = 'cbbroot'
+     MYSQL_DATABASE_PASSWORD = 'studyu'
+     MYSQL_DATABASE_DB = 'userdb'
+     conn = pymysql.connect(
+         host=MYSQL_DATABASE_HOST, 
+         user=MYSQL_DATABASE_USER, 
+         passwd=MYSQL_DATABASE_PASSWORD, 
+         db=MYSQL_DATABASE_DB)
+     
+     cursor = conn.cursor()
+     cursor.execute("SELECT * FROM sessions WHERE subject = '%s'" %
+                     (query))
+     data = cursor.fetchall()
+     return data
+
 #test function
 def test():
     # print(addSession("MA253", "testuser1","2018-04-21 08:30:00", "Davis 217"))
